@@ -3,20 +3,19 @@
 ## Install dependencies
 npm install
 
-# Compile code
+## Compile code
 npx tsc
 
-# Run code
+## Running app
 node dist/index.js
 
-# Execute tests
-
+## Execute tests
 npm run test
 
 # Using docker
 
-# Generate image
+## Generate image
 docker build -t calculator-app .
 
-# Run app
+## Running app
 docker run -it --rm calculator-app
