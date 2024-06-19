@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker build -t jchacingil/calculator-app:${BUILD_NUMBER} .'
+                    sh 'docker build -t jchacingil/calculator-app:latest .'
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'docker run --rm jchacingil/calculator-app:${BUILD_NUMBER} npm test'
+                    sh 'docker run --rm jchacingil/calculator-app:latest npm test'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'jchacingil-dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                        sh 'docker push jchacingil/calculator-app:${BUILD_NUMBER}'
+                        sh 'docker push jchacingil/calculator-app:latest'
                     }
                 }
             }
