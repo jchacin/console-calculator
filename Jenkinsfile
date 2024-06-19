@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    bat 'docker run --rm jchacingil/calculator-app:latest npm test'
+                    bat 'docker run --rm jchacingil/calculator-app:latest npm run test'
                 }
             }
         }
