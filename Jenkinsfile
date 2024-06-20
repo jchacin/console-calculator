@@ -26,14 +26,6 @@ pipeline {
             steps {
                 bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 bat 'docker push jchacingil/calculator-app:latest'
-                /*
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'jchacingil-dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        bat 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                        bat 'docker push jchacingil/calculator-app:latest'
-                    }
-                }
-                */
             }
         }
     }
