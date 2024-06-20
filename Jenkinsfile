@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('jchacingil-dockerhub')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -17,7 +21,17 @@ pipeline {
                 }
             }
         }
-
+        stage('Login') {
+            steps {
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Push') {
+            steps {
+                bat 'docker push jchacingil/calculator-app:latest'
+            }
+        }
+        /*
         stage('Deploy') {
             steps {
                 script {
@@ -28,6 +42,7 @@ pipeline {
                 }
             }
         }
+        */
     }
 
     post {
