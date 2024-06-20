@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('jchacingil-dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('hubid')
     }
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    bat 'docker build -t jchacingil/calculator-app:latest .'
+                    sh 'docker build -t jchacingil/calculator-app:latest .'
                 }
             }
         }
@@ -17,22 +17,27 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    bat 'docker run --rm jchacingil/calculator-app:latest npm run test'
+                    sh 'docker run --rm jchacingil/calculator-app:latest npm run test'
                 }
             }
         }
         
+        stage('Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
         stage('Deploy') {
             steps {
-                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                bat 'docker push jchacingil/calculator-app:latest'
+                sh 'docker push jchacingil/calculator-app:latest'
             }
         }
     }
 
     post {
         always {
-           bat 'docker logout'
+           sh 'docker logout'
         }
     }
 }
