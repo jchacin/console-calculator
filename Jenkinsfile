@@ -24,7 +24,7 @@ pipeline {
         
         stage('Login') {
             steps {
-                bat 'echo dckr_pat_veYDtBxLC2ZFOWn7gw6r1zck0pE | docker login -u jchacingil --password-stdin'
+                bat 'docker login -u jchacingil -p dckr_pat_veYDtBxLC2ZFOWn7gw6r1zck0pE'
             }
         }
 
